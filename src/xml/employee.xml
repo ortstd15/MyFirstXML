@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Employees>
+    <Employee>
+        <name>Oliver</name>
+        <age>13</age>
+        <role>Java Expert</role>
+        <gender>Unknown</gender>
+    </Employee>
+    <Employee>
+        <name>Olivia</name>
+        <age>18</age>
+        <role>Java Expert</role>
+        <gender>Female</gender>
+    </Employee>
+    <Employee>
+        <name>Michael</name>
+        <age>18</age>
+        <role>Boss</role>
+        <gender>Male</gender>
+    </Employee>
+    <Employee>
+        <name>Brunner</name>
+        <age>18</age>
+        <role>Assistant</role>
+        <gender>Male</gender>
+    </Employee>
+</Employees>
