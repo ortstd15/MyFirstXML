@@ -46,8 +46,4 @@ public class Employee {
         this.age = age;
     }
 
-    public Employee() {
-
-
-    }
 }

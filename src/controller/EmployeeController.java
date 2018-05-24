@@ -1,16 +1,21 @@
 package controller;
 
 import model.Employee;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import serverproxy.IServerProxy;
 import serverproxy.ServerProxyFactory;
 
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EmployeeController {
 
@@ -69,5 +74,47 @@ public class EmployeeController {
             }
         }
         return e;
+    }
+
+    public void addEmployee(Employee emp) {
+        try {
+            Document doc;
+            IServerProxy server = ServerProxyFactory.getInstance();
+
+            doc = server.readXML(new File("employee.xml"));
+
+            Element employee = doc.createElement("Employee");
+            Element name = doc.createElement("name");
+            Text nameT = doc.createTextNode(emp.getName());
+            Element age = doc.createElement("age");
+            Text ageT = doc.createTextNode(emp.getAge() + "");
+            Element role = doc.createElement("role");
+            Text roleT = doc.createTextNode(emp.getRole());
+            Element gender = doc.createElement("gender");
+            Text genderT = doc.createTextNode(emp.getGender());
+
+            ((Element) doc.getElementsByTagName("Employees").item(0)).appendChild(employee);
+            employee.appendChild(name);
+            employee.appendChild(age);
+            employee.appendChild(role);
+            employee.appendChild(gender);
+            name.appendChild(nameT);
+            age.appendChild(ageT);
+            role.appendChild(roleT);
+            gender.appendChild(genderT);
+
+            DOMSource source = new DOMSource(doc);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            StreamResult result = new StreamResult("employee.xml");
+            transformer.transform(source, result);
+        } catch (TransformerConfigurationException ex) {
+            Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerException ex) {
+            Logger.getLogger(
+                    EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

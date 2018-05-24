@@ -12,6 +12,7 @@ public class XMLReaderDOM {
         EmployeeController controller = new EmployeeController();
 
 
+
         for (Employee e : controller.readEmployees()) {
             System.out.println(e);
         }
